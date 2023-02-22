@@ -1,33 +1,29 @@
-import logging
-
-from aiogram import Bot, Dispatcher, executor, types
-
-API_TOKEN = '6108809609:AAHao6tTlZR3f_vaKLTxmiL1cqaqstyaSq8'
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-
-# Initialize bot and dispatcher
-bot = Bot(token=API_TOKEN)
-dp = Dispatcher(bot)
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
 
 
-@dp.message_handler(commands=['start', 'help'])
-async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    await message.reply("Asalomu alaykum")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user = update.message.from_user
+    buttons = [
+        [
+            InlineKeyboardButton('Talaba ma`lumoti', callback_data='malumot1'),
+            InlineKeyboardButton('Talaba login', callback_data='malumot2'),
+        ],
+        [
+            InlineKeyboardButton('Talaba dars jadvali', callback_data='malumot3'),
+            InlineKeyboardButton('Talaba malumotini yangilash', callback_data='malumot4'),
+        ]
+    ]
+    await update.message.reply_html('Asalomu Alaykum {}\n \n sizga qanday yordam bera olaman!!!'.format(user.first_name), 
+                                    reply_markup=InlineKeyboardMarkup(buttons))
+    
 
 
-
-@dp.message_handler()
-async def echo(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
-
-    await message.answer(message.text)
+    
 
 
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+app = ApplicationBuilder().token("6108809609:AAHao6tTlZR3f_vaKLTxmiL1cqaqstyaSq8").build()
+
+app.add_handler(CommandHandler("start", start))
+
+app.run_polling()
