@@ -3,7 +3,7 @@ import requests
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 
-API_TOKEN = '6108809609:AAHao6tTlZR3f_vaKLTxmiL1cqaqstyaSq8'
+API_TOKEN = '6381039530:AAEqs25byPNY7YCTV2_ed3TGAJdsUs7w_tk'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
